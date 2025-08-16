@@ -17,13 +17,6 @@ sudo netdiscover -r 192.168.1.1/24
 
 From the output, I found that the target machine was assigned the IP address **192.168.1.104**.
 
-Alternatively, I also created a quick bash script to scan and list all live IPs using Nmap.
-
-```bash
-#!/bin/bash
-nmap -sP 192.168.1.1/24 | grep "for" | cut -d " " -f 5
-```
-
 ---
 
 ## Port Scanning with Nmap
