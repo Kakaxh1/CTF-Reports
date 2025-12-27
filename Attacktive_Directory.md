@@ -172,19 +172,19 @@ whoami /all
 ```powershell
 type C:\Users\svc-admin\Desktop\user.txt.txt
 ```
-**Flag:** `TryHackMe{K3rb3r0s_Pr3_4uth}`
+**Flag:** `TryHackMe{_________________}`
 
 ### **User Flag - backup**
 ```powershell
 type C:\Users\backup\Desktop\PrivEsc.txt
 ```
-**Flag:** `TryHackMe{B4ckM3UpSc0tty!}`
+**Flag:** `TryHackMe{_________________}`
 
 ### **Root Flag - Administrator**
 ```powershell
 type C:\Users\Administrator\Desktop\root.txt
 ```
-**Flag:** `TryHackMe{4ctiveD1rectoryM4st3r}`
+**Flag:** `TryHackMe{_________________}`
 
 ---
 
