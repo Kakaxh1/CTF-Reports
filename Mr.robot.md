@@ -144,9 +144,9 @@ Found:
 
 ## **7. Summary of Flags Collected**
 
-* **Key 1:** 073403c8a58a1f80d943455fb30724b9
-* **Key 2:** 822c73956184f694993bede3eb39f959
-* **Key 3:** 04787ddef27c3dee1ee161b21670b4e4
+* **Key 1:** 073403c8xxxxxxxxxxxxxxxxxxxxxxxx
+* **Key 2:** 822c7395xxxxxxxxxxxxxxxxxxxxxxxx
+* **Key 3:** 04787ddexxxxxxxxxxxxxxxxxxxxxxxx
 
 
 ---
