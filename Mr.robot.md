@@ -34,7 +34,7 @@ key-1-of-3.txt
 
 * **fsocity.dic** – Wordlist used for brute force
 * **key-1-of-3.txt** – First flag:
-  **073403c8a58a1f80d943455fb30724b9**
+  **073403c8xxxxxxxxxxxxxxxxxxxxxxxx**
 
 ### **Interesting URLs Discovered via Gobuster**
 
@@ -66,7 +66,7 @@ hydra -l elliot -P fsocity.dic 10.10.10.128 http-post-form "/wp-login.php:log=^U
 * **Password:** ER28-0652
 
 **Key 2 Found (Post Login):**
-**822c73956184f694993bede3eb39f959**
+**822c7395xxxxxxxxxxxxxxxxxxxxxxxx**
 
 ---
 
@@ -138,7 +138,7 @@ Found:
 `/root/key-3-of-3.txt`
 
 **Final Flag (Key 3):**
-**04787ddef27c3dee1ee161b21670b4e4**
+**04787ddexxxxxxxxxxxxxxxxxxxxxxxx**
 
 ---
 
