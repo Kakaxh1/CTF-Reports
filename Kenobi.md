@@ -2,7 +2,7 @@
 **Target IP:** 10.49.164.52  
 **Platform:** TryHackMe  
 **Difficulty:** Easy/Intermediate  
-**Report Author:** [Your Name/Alias]  
+**Report Author:**   Kkaxh1
 **Date:** 22 December 2025  
 
 ---
