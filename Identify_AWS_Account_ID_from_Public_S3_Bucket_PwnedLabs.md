@@ -1,18 +1,10 @@
-# Complete CTF Write-Up: Identify AWS Account ID from Public S3 Bucket
+# Identify AWS Account ID from Public S3 Bucket - CTF Report (Kakaxh1)
 
 ---
-
-## Lab Overview
-
-**Objective**: Identify the AWS Account ID that owns a public S3 bucket and submit it as the flag.
-
-**Tools Used**:
-- Nmap
-- AWS CLI
-- s3-account-search tool
-- curl
-- Kali Linux
-
+Target IP: 54.204.171.32
+Platform: Pwned Labs
+Machine: Identify AWS Account ID from a Public S3 Bucket
+Date: June 2026
 ---
 
 ## Initial Reconnaissance
@@ -45,19 +37,22 @@ The server was only running HTTP on port 80.
 
 Visiting http://54.204.171.32/ revealed a web page. The source code or page content contained clues about the S3 bucket.
 
-Using curl to grab the page:
+i go to the page:
 
 ```bash
-curl -s http://54.204.171.32/
+http://54.204.171.32/
 ```
+<img width="639" height="402" alt="Screenshot 2026-06-22 004218" src="https://github.com/user-attachments/assets/257b17f9-60c2-4b2d-aba6-74ac4d602568" />
 
-<img width="503" height="143" alt="Screenshot 2026-06-22 004849" src="https://github.com/user-attachments/assets/1fd41fb6-d8b5-4105-a560-0078f7ab5462" />
 
 The page contained references to an S3 bucket. Specifically, images were being loaded from:
 
 ```
 https://mega-big-tech.s3.amazonaws.com/images/watchpro5.jpg
 ```
+
+<img width="640" height="400" alt="Screenshot 2026-06-22 004305" src="https://github.com/user-attachments/assets/6944e964-779e-453c-a93a-d6e2059c6025" />
+
 
 This revealed the S3 bucket name: **mega-big-tech**
 
@@ -73,30 +68,20 @@ Since the bucket appeared to be public, I accessed the bucket listing:
 curl -s https://mega-big-tech.s3.amazonaws.com/
 ```
 
+<img width="638" height="399" alt="Screenshot 2026-06-22 014047" src="https://github.com/user-attachments/assets/7da31804-68f1-4e78-a173-bff2e72b1675" />
+
+
+<img width="632" height="272" alt="Screenshot 2026-06-22 014017" src="https://github.com/user-attachments/assets/351473a5-27bc-4835-84da-bad5f6041c8c" />
+
+
 Or with AWS CLI:
 
 ```bash
 aws s3 ls s3://mega-big-tech/ --no-sign-request
 ```
 
-The bucket listing showed:
+<img width="278" height="241" alt="image" src="https://github.com/user-attachments/assets/d17fd090-f41f-469b-af65-5422e866ea9f" />
 
-```xml
-<ListBucketResult>
-<Name>mega-big-tech</Name>
-<Contents>
-<Key>images/</Key>
-<Contents>
-<Key>images/banner.jpg</Key>
-<Contents>
-<Key>images/notepro1.jpg</Key>
-<Contents>
-<Key>images/notepro2.jpg</Key>
-<!-- Multiple image files -->
-<Contents>
-<Key>images/watchpro5.jpg</Key>
-</ListBucketResult>
-```
 
 This confirmed the bucket was publicly accessible and contained only image files.
 
@@ -118,6 +103,8 @@ AWS Secret Access Key [None]: 43sJuGeuYZ6MiRTr7EpBpUnPTRtm2Y3Q/VfTtLHB
 Default region name [None]: us-east-1
 Default output format [None]: 
 ```
+<img width="503" height="143" alt="Screenshot 2026-06-22 004849" src="https://github.com/user-attachments/assets/758d4c4e-f80c-4f37-bc77-8abcbd9562eb" />
+
 
 ### Step 6: Verify Credentials
 
@@ -191,44 +178,10 @@ found: 10751350379
 found: 107513503799
 ```
 
+<img width="559" height="221" alt="image" src="https://github.com/user-attachments/assets/cdfe0321-2dd9-45ba-a49a-af3444082d7f" />
+
+
 **Target Account ID**: 107513503799
-
----
-
-## Understanding the Attack
-
-### How s3-account-search Works
-
-The tool exploits AWS IAM condition keys. Specifically, it uses the `s3:ResourceAccount` condition key which allows policies to check the AWS account ID of an S3 bucket.
-
-The brute force approach:
-
-1. The tool assumes an IAM role that has permission to perform `s3:GetObject`
-2. It attempts to access the bucket with a condition like:
-   ```json
-   {
-       "Effect": "Allow",
-       "Action": "s3:GetObject",
-       "Resource": "arn:aws:s3:::mega-big-tech/*",
-       "Condition": {
-           "StringEquals": {
-               "s3:ResourceAccount": "1*"
-           }
-       }
-   }
-   ```
-3. If AWS returns "AccessDenied", the prefix is incorrect
-4. If AWS returns "NoSuchKey" (or similar), the prefix is correct
-5. Each correct digit is appended and the process repeats
-6. After 12 digits, the full account ID is discovered
-
-### Why This Matters
-
-AWS account IDs are 12-digit numbers, meaning there are 10^12 possible combinations. Traditional brute force would take years. This technique reduces the search space to:
-
-- 12 positions × 10 digits = 120 attempts maximum
-
-This makes the attack practical and quick.
 
 ---
 
@@ -244,6 +197,9 @@ Response header:
 ```
 x-amz-bucket-region: us-east-1
 ```
+
+<img width="809" height="182" alt="Screenshot 2026-06-22 013429" src="https://github.com/user-attachments/assets/554db846-5057-4144-9ff5-e8aafccf66f6" />
+
 
 The bucket is hosted in us-east-1 (North Virginia).
 
@@ -272,71 +228,10 @@ Output:
 ]
 ```
 
-### Step 11: Verify the Snapshot is Public
-
-```bash
-aws ec2 describe-snapshot-attribute --snapshot-id snap-08580043db7a923f6 --attribute createVolumePermission --region us-east-1
-```
-
-Output:
-```json
-{
-    "CreateVolumePermissions": [
-        {
-            "Group": "all"
-        }
-    ]
-}
-```
+<img width="733" height="293" alt="Screenshot 2026-06-22 011836" src="https://github.com/user-attachments/assets/52a79cfa-c05a-4557-84a3-a3d4a177bd42" />
 
 The snapshot is public and unencrypted. Anyone can create a volume from it and access the data.
 
-### Step 12: Filter for Public Snapshots Only
-
-```bash
-aws ec2 describe-snapshots --owner-ids 107513503799 --region us-east-1 --query 'Snapshots[?Public==`true`].[SnapshotId,VolumeSize,State,Description]' --output table
-```
-
-Output:
-```
-|  snap-08580043db7a923f6  |  8  |  completed  |  Created by CreateImage(i-089b146125db92ee4) for ami-0676627ee43624fb2  |
-```
-
----
-
-## What the Nmap Scan Revealed
-
-The Nmap scan on 54.204.171.32 showed only:
-
-- Port 80 (HTTP) - Apache web server
-
-The web server hosted content that referenced the S3 bucket. This is how we discovered the bucket name.
-
-### Web Server Investigation
-
-Checking the web page source:
-
-```bash
-curl -s http://54.204.171.32/
-```
-
-Looking for S3 references:
-
-```bash
-curl -s http://54.204.171.32/ | grep -i s3
-```
-
-Looking for bucket names:
-
-```bash
-curl -s http://54.204.171.32/ | grep -i bucket
-```
-
-The output revealed the S3 bucket name: mega-big-tech
-
-### Why Only Port 80 Matters
-
-Even though only HTTP was open, it was enough. The web page contained references to the S3 bucket, which was the target. We didn't need SSH or HTTPS access because the web page already gave us what we needed.
 
 ---
 
