@@ -1,9 +1,12 @@
-# Identify AWS Account ID from Public S3 Bucket - CTF Report (Kakaxh1)  
+# Identify AWS Account ID from Public S3 Bucket - CTF Report (Kakaxh1)
+
 ---
-**Target IP:** 54.204.171.32  
-**Platform:** Pwned Labs  
-**Machine:** Identify AWS Account ID from a Public S3 Bucket  
-**Date:** June 2026  
+
+**Target IP:** 54.204.171.32
+**Platform:** Pwned Labs
+**Machine:** Identify AWS Account ID from a Public S3 Bucket
+**Date:** June 2026
+
 ---
 
 ## Initial Reconnaissance
