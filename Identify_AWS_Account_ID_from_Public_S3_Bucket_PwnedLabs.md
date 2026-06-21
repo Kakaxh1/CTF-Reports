@@ -258,7 +258,3 @@ The snapshot is public and unencrypted. Anyone can create a volume from it and a
 **GitHub**: https://github.com/Kakaxh1/  
 **Date**: December 2025  
 **Platform**: Pwned Labs - Identify AWS Account ID from a Public S3 Bucket
-
----
-
-Lab Complete. Flag: 107513503799
