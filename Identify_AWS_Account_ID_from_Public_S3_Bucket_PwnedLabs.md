@@ -2,8 +2,11 @@
 
 ---
 Target IP: 54.204.171.32
+
 Platform: Pwned Labs
+
 Machine: Identify AWS Account ID from a Public S3 Bucket
+
 Date: June 2026
 ---
 
@@ -67,11 +70,13 @@ Since the bucket appeared to be public, I accessed the bucket listing:
 ```bash
 curl -s https://mega-big-tech.s3.amazonaws.com/
 ```
+<img width="632" height="272" alt="Screenshot 2026-06-22 014017" src="https://github.com/user-attachments/assets/351473a5-27bc-4835-84da-bad5f6041c8c" />
+
 
 <img width="638" height="399" alt="Screenshot 2026-06-22 014047" src="https://github.com/user-attachments/assets/7da31804-68f1-4e78-a173-bff2e72b1675" />
 
 
-<img width="632" height="272" alt="Screenshot 2026-06-22 014017" src="https://github.com/user-attachments/assets/351473a5-27bc-4835-84da-bad5f6041c8c" />
+
 
 
 Or with AWS CLI:
